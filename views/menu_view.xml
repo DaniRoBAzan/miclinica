@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--menu principal -->
+    <menuitem id="miclinica_root" name="Mi Clinica" sequence="1" web_icon="miclinica,static/description/icon.png"/>
+<!--menu de los planes 
+    <menuitem id="miclinica_menu_planesobrasocial" name="Plan Obra Social" parent="miclinica_root" action="miclinica.action_planesobrasocial" sequence="10"/>
+-->
+</odoo>

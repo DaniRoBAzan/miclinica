@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pacientes_tree_form" model="ir.ui.view">
+            <field name="name">miclinica.pacientes.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="after">
+                    <field name="paciente_dni"/>
+                    <field name="paciente_birthday"/>
+                    <field name="paciente_age"/>
+                </field>
+
+                <field name="category_id" position="after">
+                    <field name="paciente_category_covid"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
