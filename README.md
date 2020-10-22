@@ -1,0 +1,2 @@
+# miclinica
+prebas en odoo
