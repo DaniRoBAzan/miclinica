@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!--menu principal -->
-    <menuitem id="miclinica_root" name="Mi Clinica" sequence="1" web_icon="miclinica,static/description/icon.png"/>
-<!--menu de los planes 
-    <menuitem id="miclinica_menu_planesobrasocial" name="Plan Obra Social" parent="miclinica_root" action="miclinica.action_planesobrasocial" sequence="10"/>
--->
-</odoo>
+    <menuitem id="drb_miclinica_root"
+        name="Clinica" 
+        groups="base.group_no_one"
+        web_icon="miclinica,static/description/icon.png"/>
+
+    <menuitem name="General" id="menu_drb_general" parent="miclinica.drb_miclinica_root" sequence="10"/>
+    <menuitem name="Pacientes" id="menu_drb_general_planes" action="contacts.action_contacts" parent="miclinica.menu_drb_general" sequence="1" />
+    <menuitem name="Farmacos" id="menu_drb_general_obra_social" action="account.product_product_action_purchasable" parent="miclinica.menu_drb_general" sequence="2"/>
+    
+    <menuitem name="Configuraciones" id="menu_drb_general_configuracion" parent="miclinica.drb_miclinica_root" sequence="20"/>
+    <menuitem name="Planes" id="menu_drb_planes" action="miclinica.action_drb_planes" parent="miclinica.menu_drb_general_configuracion" sequence="10" />
+    <menuitem name="Obra Social" id="menu_drb_obra_social" action="miclinica.action_drb_obra_social" parent="miclinica.menu_drb_general_configuracion" sequence="20"/>
+    <menuitem name="Enfermedades" id="menu_drb_enfermedades" action="miclinica.action_drb_enfermedades" parent="miclinica.menu_drb_general_configuracion" sequence="30"/>
+    <menuitem name="Cirugias" id="menu_drb_cirugias" action="miclinica.action_drb_cirugias" parent="miclinica.menu_drb_general_configuracion" sequence="40"/>
+   </odoo>

@@ -2,12 +2,48 @@
 
 from odoo import models, fields, api,  _
 
-class ObraSociales(models.Model):
-    _inherit = 'res.partner'
-    _name = 'res.partner'
-    _description ='modelo de Obras sociales '
-    obra_social_id = fields.Many2one('res.partner', string='Parent Category', index=True, ondelete='cascade')
-    plan_id = fields.One2many('res.partner', 'obra_social_id')
-    name_plan = fields.Char(string="Nombre del Plan")
-    description_plan = fields.Text(string="Detalle del Plan", help="Detalle de lo que cubre este plan.")
-    # plans_ids = fields.One2many('miclinica.planesobrasocial', 'parent_id', string='Child Tags')
+class ObraSocial(models.Model):
+    _name = 'miclinica.obrassociales'
+    _description ='modelo de Obras sociales'
+    _rec_name = 'nombre_obra_social'
+
+
+    #-#CAMPOS
+    nombre_obra_social = fields.Char(
+        string="Nombre"
+    )
+    codigo_obra_social = fields.Char(
+        string="Codigo"
+    )
+    descripcion_obra_social = fields.Text(
+        string="Detalle", 
+        help="Detalle de la obra social."
+    )
+    logo_obra_social = fields.Binary(
+        string="Logo", 
+        attachment=True
+    )
+    obrasocial_line_ids = fields.One2many('miclinica.obrassociales.line', 'obrasocial_ids', string='Linea Obra Social')
+
+
+class ObraSocialLine(models.Model):
+    _name = 'miclinica.obrassociales.line'
+    _description ='Linea de Obras sociales'
+    _rec_name = 'name'
+            
+    obrasocial_ids = fields.Many2one(
+        'miclinica.obrassociales', 
+        string='Obra Social'
+    )
+    planes_ids = fields.Many2one(
+        'miclinica.planes',
+        string='Planes'
+    )
+    name = fields.Char(
+        string='Nombre',
+        compute='_compute_name'
+    )
+
+    def _compute_name(self):
+        for rec in self:
+            rec.name = rec.obrasocial_ids.nombre_obra_social + " / " + rec.planes_ids.nombre_plan or False

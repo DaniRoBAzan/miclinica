@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="drb_miclinica_planes_form" model="ir.ui.view">
+            <field name="name">miclinica.planes.form</field>
+            <field name="model">miclinica.planes</field>
+            <field name="arch" type="xml">
+                <form string="Planes">
+                    <sheet>
+                        <field name="logo_plan" widget="image" class="oe_avatar" />
+                        <div class="oe_title">
+                            <label for="nombre_plan" string="Nombre" class="oe_edit_only" />
+                            <h1>
+                                <field name="nombre_plan" />
+                            </h1>
+                        </div>
+                        <group string="Detalles">
+                            <group>
+                                <field name="codigo_plan" string="Codigo"/>
+                                <field name="descripcion_plan" string="Descripcion"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="drb_miclinica_planes_tree" model="ir.ui.view">
+            <field name="name">miclinica.planes.tree</field>
+            <field name="model">miclinica.planes</field>
+            <field name="arch" type="xml">
+                <tree string="Planes" >
+                    <field name="nombre_plan"/>
+                    <field name="codigo_plan"/>
+                    <field name="descripcion_plan"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_drb_planes">
+            <field name="name">Planes</field>
+            <field name="res_model">miclinica.planes</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

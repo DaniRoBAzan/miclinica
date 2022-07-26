@@ -1,20 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="pacientes_tree_form" model="ir.ui.view">
+        <record id="drb_pacientes_tree_form" model="ir.ui.view">
             <field name="name">miclinica.pacientes.form</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <field name="vat" position="after">
+<!-- AGREGAMOS DATOS DEL PACIENTE -->
+                <xpath expr="//field[@name='vat']" position="after">
                     <field name="paciente_dni"/>
                     <field name="paciente_birthday"/>
                     <field name="paciente_age"/>
-                </field>
-
-                <field name="category_id" position="after">
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="after">
                     <field name="paciente_category_covid"/>
-                </field>
+                    <field name="es_paciente"/>
+                </xpath>
+<!-- AGREGAMOS PAGINA DESPUES DE INTERNATL NOTES -->
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page id="paciente_obrasocial_ids" string='Planes Obra Social' groups="base.group_no_one">
+                        <field name="paciente_obrasocial_ids" widget="section_and_note_one2many" mode="tree,kanban">
+                            <tree editable="bottom" string="Lineas de la Obra Social" groups="base.group_no_one">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                </control>
+                                <field name="paciente_ids" invisible="1"/>
+                                <field name="obrasocial_line_ids" />
+                            </tree>
+                        </field>
+                    </page>
+<!-- - ANTECEDENTES PERSONALES  -->
+                    <page id="antecedentes_personales_ids" string='Antecedentes Personales' groups="base.group_no_one">
+                        <field name="antecedentes_personales_ids" widget="section_and_note_one2many" mode="tree,kanban">
+                            <tree editable="bottom" string="Lineas Antecedentes Personales" groups="base.group_no_one">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                </control>
+                                <field name="paciente_ids" invisible="1"/>
+                                <field name="enfermedades_ids" />
+                                <field name="observaciones" />
+                            </tree>
+                        </field>
+                    </page>
+<!-- - ANTECEDENTES FAMILIARES -->
+                    <page id="antecedentes_familiares_ids" string='Antecedentes Familiares' groups="base.group_no_one">
+                        <field name="antecedentes_familiares_ids" widget="section_and_note_one2many" mode="tree,kanban">
+                            <tree editable="bottom" string="Lineas de Antecedentes Familiares" groups="base.group_no_one">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                </control>
+                                <field name="paciente_ids" invisible="1"/>
+                                <field name="familiar" />
+                                <field name="enfermedades_ids" />
+                                <field name="observaciones" />
+                            </tree>
+                        </field>
+                    </page>
+<!-- - CIRUGIAS PREVIAS -->
+                    <page id="cirugias_previas_ids" string='Cirugias Previas' groups="base.group_no_one">
+                        <field name="cirugias_previas_ids" widget="section_and_note_one2many" mode="tree,kanban">
+                            <tree editable="bottom" string="Lineas de Cirugias Previas" groups="base.group_no_one">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                </control>
+                                <field name="paciente_ids" invisible="1"/>
+                                <field name="cirugias_ids" />
+                                <field name="observaciones" />
+                            </tree>
+                        </field>
+                    </page>
+<!-- - FARMACOS -->
+                    <page id="farmacos_ids" string='Farmacos Recetados' groups="base.group_no_one">
+                        <field name="farmacos_ids" widget="section_and_note_one2many" mode="tree,kanban">
+                            <tree editable="bottom" string="Lineas de Farmacos Recetados" groups="base.group_no_one">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                </control>
+                                <field name="paciente_ids" invisible="1"/>
+                                <field name="farmacos_ids" groups="base.group_no_one"/>
+                                <field name="observaciones" />
+                            </tree>
+                        </field>
+                    </page>
+<!-- - HABITOS -->
+                    <page id="habitos" string='Habitos' groups="base.group_no_one">
+                        <group>
+                            <field name="habitos_horas_semanas" string="Horas/Semanas"/>
+                            <field name="habitos_cigarrillos_diarios" string="Cant.Cigarrillos"/>
+                            <field name="habitos_bebe_alcohol" string="Bebe Alcohol?"/>
+                        </group>
+                        <group>  
+                            <field name="habitos_observaciones" string="Observaciones"/>
+                        </group>
+                    </page>
+<!-- - EXAMEN FISICO -->
+                    <page id="examen_fisico" string='Examen Fisico' groups="base.group_no_one">
+                        <field name="examen_fisico" />
+                    </page>
+                </xpath>
             </field>
         </record>
     </data>

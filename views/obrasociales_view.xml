@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record id="planesobrasocial_tree_form" model="ir.ui.view">
-            <field name="name">miclinica.planesobrasocial.form</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
-            <field name="arch" type="xml">
-                <!-- AGREGAMOS UNA PESTANIA MAS DESPUES DE INTERNATL NOTES -->
-                <page name="internal_notes" position="after">
-                    <page name="aditional_information_obrasocial" string="Obra Social">
-                        <group>
-                            <!-- AGREGAMOS EL CUADRITO -->
-                            <field name="plan_id" mode="tree">
-                                <tree editable="bottom" string="Planes Items">
+    <record id="drb_miclinica_obrassociales_form" model="ir.ui.view">
+        <field name="name">miclinica.obrassociales.form</field>
+        <field name="model">miclinica.obrassociales</field>
+        <field name="arch" type="xml">
+            <form string="Obras Sociales">
+                <sheet>
+                    <field name="logo_obra_social" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="nombre_obra_social" string="Nombre" class="oe_edit_only" />
+                        <h1>
+                            <field name="nombre_obra_social" />
+                        </h1>
+                    </div> 
+                    <group>
+                        <field name="codigo_obra_social" string="Codigo" />
+                        <field name="descripcion_obra_social" string="Descripcion" />
+                    </group>
+                    <notebook>
+                        <page id="obrasocial_line_ids" string='Planes' groups="base.group_no_one">
+                            <field name="obrasocial_line_ids" widget="section_and_note_one2many" mode="tree,kanban">
+                                <tree editable="bottom" string="Lineas de la Obra Social" groups="base.group_no_one">
                                     <control>
-                                        <create name="add_line_control" string="Agrega un plan"/>
-                                    </control>                                   
-                                    <field name="name_plan" widget="section_and_note_text" string="Nombre del Plan"/>
-                                    <field name="description_plan" widget="section_and_note_text" string="Detalle del Plan"/>
+                                        <create name="add_line_control" string="Add a line"/>
+                                    </control>
+                                    <field name="obrasocial_ids" invisible="1"/>
+                                    <field name="planes_ids" />
                                 </tree>
                             </field>
-                        </group>
-                    </page>
-                </page>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="drb_miclinica_obrassociales_tree" model="ir.ui.view">
+            <field name="name">miclinica.obrassociales.tree</field>
+            <field name="model">miclinica.obrassociales</field>
+            <field name="arch" type="xml">
+                <tree string="Obras Sociales" >
+                    <field name="nombre_obra_social"/>
+                    <field name="codigo_obra_social"/>
+                    <field name="descripcion_obra_social"/>
+                </tree>
             </field>
         </record>
-    </data>
+    <record model="ir.actions.act_window" id="action_drb_obra_social">
+        <field name="name">Obras Sociales</field>
+        <field name="res_model">miclinica.obrassociales</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 </odoo>
