@@ -21,6 +21,8 @@
         'views/cirugias_view.xml',
         'views/pacientes_view.xml',
         'views/menu_view.xml',
+        'report/report_partner_template.xml',
+        'report/report_partner_view.xml',
         'security/ir.model.access.csv',
     ],
     'images': ['static/description/icon.png'],

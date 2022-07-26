@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_partner_turno">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="docs.with_context(lang=docs[0].lang)" />
+        <div class="page">
+            <h2> 
+                <strong t-att-style="'color:green'">PACIENTE: </strong>
+                <span t-field="o.name"/>
+            </h2>
+            <hr></hr>
+            <div class="row mt32 mb32" id="informations" style="margin-bottom: 20px;">
+                <div t-if="o.paciente_dni" class="col-2">
+                    <p><strong t-att-style="'color:green'">DNI:</strong></p>
+                    <p class="m-0" t-field="o.paciente_dni"/>
+                </div>
+                <div t-if="o.paciente_age" class="col-2">
+                    <p><strong t-att-style="'color:green'">EDAD:</strong></p>
+                    <p class="m-0" t-field="o.paciente_age"/>
+                </div>
+                <div t-if="o.phone" class="col-3">
+                    <p><strong t-att-style="'color:green'">TEL:</strong></p>
+                    <p class="m-0" t-field="o.phone"/>
+                </div>
+                <div t-if="o.paciente_birthday" class="col-2">
+                    <p><strong t-att-style="'color:green'">FECHA NAC.:</strong></p>
+                    <p class="m-0" t-field="o.paciente_birthday" t-options='{"widget": "date"}'/>
+                </div>
+                <div t-if="o.habitos_bebe_alcohol" class="col-4">
+                    <p><strong t-att-style="'color:green'">BEBE ALCOHOL:</strong></p>
+                    SI
+                </div>
+            </div>
+            <hr></hr>
+            <div class="row mt32 mb32" id="informations" style="margin-bottom: 20px;">
+                <div t-if="o.habitos_observaciones" class="col-6">
+                    <p><strong t-att-style="'color:green'">OBSERVACIONES:</strong></p>
+                    <p class="m-0" t-field="o.habitos_observaciones"/>
+                </div>
+            </div>
+
+            <div t-if="o.paciente_obrasocial_ids" style="margin-bottom: 20px">
+                <p><strong t-att-style="'color:green'">OBRA SOCIAL:</strong></p>
+                <table class="table table-sm" name="paciente_obrasocial_ids">
+                    <thead>
+                        <tr>
+                            <th name="th_sm_description"><strong>Plan</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.paciente_obrasocial_ids" t-as="plan">
+                            <td><span><p t-esc="plan.obrasocial_line_ids.name"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div t-if="o.antecedentes_personales_ids" style="margin-bottom: 20px">
+                <p><strong t-att-style="'color:green'">ANTECEDENTE PERSONAL:</strong></p>
+                <table class="table table-sm" name="paciente_obrasocial_ids">
+                    <thead>
+                        <tr>
+                            <th name="th_sm_description"><strong>Enfermedad</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.antecedentes_personales_ids" t-as="enfermedad">
+                            <td><span><p t-esc="enfermedad.enfermedades_ids.nombre"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div t-if="o.antecedentes_familiares_ids" style="margin-bottom: 20px">
+                <p><strong t-att-style="'color:green'">ANTECEDENTE FAMILIAR:</strong></p>
+                <table class="table table-sm" name="paciente_obrasocial_ids">
+                    <thead>
+                        <tr><th name="th_sm_familiar"><strong>Familiar</strong></th>
+                        <th name="th_sm_description"><strong>Enfermedad</strong></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.antecedentes_familiares_ids" t-as="antecedente">
+                            <td><span><p t-esc="antecedente.familiar"/></span></td>
+                            <td><span><p t-esc="antecedente.enfermedades_ids.nombre"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div t-if="o.cirugias_previas_ids" style="margin-bottom: 20px">
+                <p><strong t-att-style="'color:green'">CIRUGIAS PREVIAS:</strong></p>
+                <table class="table table-sm" name="paciente_obrasocial_ids">
+                    <thead>
+                        <tr><th name="th_sm_familiar"><strong>Cirugia</strong></th>
+                        <th name="th_sm_description"><strong>Observacion</strong></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.cirugias_previas_ids" t-as="cirugia">
+                            <td><span><p t-esc="cirugia.cirugias_ids.nombre"/></span></td>
+                            <td><span><p t-esc="cirugia.observaciones"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div t-if="o.farmacos_ids" style="margin-bottom: 20px">
+                <p><strong t-att-style="'color:green'">FARMACOS:</strong></p>
+                <table class="table table-sm" name="paciente_obrasocial_ids">
+                    <thead>
+                        <tr><th name="th_sm_familiar"><strong>Farmaco</strong></th>
+                        <th name="th_sm_description"><strong>Observacion</strong></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.farmacos_ids" t-as="farmaco">
+                            <td><span><p t-esc="farmaco.farmacos_ids.name"/></span></td>
+                            <td><span><p t-esc="farmaco.observaciones"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </t>
+</template>
+
+<template id="report_partner_turno_print">
+    <t t-call="web.html_container">
+        <t t-call="miclinica.report_partner_turno" t-lang="docs[0].lang"/>
+    </t>
+</template>
+
+</odoo>
