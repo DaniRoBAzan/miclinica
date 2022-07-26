@@ -12,6 +12,7 @@
         'contacts', 
         'sale', 
         'account', 
+        'calendar', 
     ],
     'data': [
         'views/planes_view.xml',

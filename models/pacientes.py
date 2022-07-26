@@ -34,20 +34,57 @@ class Pacientes(models.Model):
         default=False, 
         help="Seleccionar en caso de que este contacto sera utilizado como paciente."
     )
-    habitos_horas_semanas = fields.Integer(string='Horas / Semanas', default=0)
-    habitos_cigarrillos_diarios = fields.Integer(string='Cant. Cigarrillos Diarios', default=0)
-    habitos_bebe_alcohol = fields.Boolean(string='Bebe Alcohol', default=True)
-    habitos_observaciones = fields.Text(string='Observaciones')
-    examen_fisico = fields.Text(string='Examen Fisico')
-
-    antecedentes_personales_ids = fields.One2many('miclinica.antecedentes.personales', 'paciente_ids', string='Antecedentes Personales')
-    antecedentes_familiares_ids = fields.One2many('miclinica.antecedentes.familiares', 'paciente_ids', string='Antecedentes Familiares')
-    cirugias_previas_ids = fields.One2many('miclinica.cirugias.personales', 'paciente_ids', string='Cirugias Previas')
-    farmacos_ids = fields.One2many('miclinica.farmacos.personales', 'paciente_ids', string='Farmacos')
-
+    habitos_horas_semanas = fields.Integer(
+        string='Horas / Semanas', 
+        default=0
+    )
+    habitos_cigarrillos_diarios = fields.Integer(
+        string='Cant. Cigarrillos Diarios', 
+        default=0
+    )
+    habitos_bebe_alcohol = fields.Boolean(
+        string='Bebe Alcohol', 
+        default=True
+    )
+    habitos_observaciones = fields.Text(
+        string='Observaciones'
+    )
+    examen_fisico = fields.Text(
+        string='Examen Fisico'
+    )
+    antecedentes_personales_ids = fields.One2many(
+        'miclinica.antecedentes.personales', 
+        'paciente_ids', 
+        string='Antecedentes Personales'
+    )
+    antecedentes_familiares_ids = fields.One2many(
+        'miclinica.antecedentes.familiares', 
+        'paciente_ids', 
+        string='Antecedentes Familiares'
+    )
+    cirugias_previas_ids = fields.One2many(
+        'miclinica.cirugias.personales', 
+        'paciente_ids', 
+        string='Cirugias Previas'
+    )
+    farmacos_ids = fields.One2many(
+        'miclinica.farmacos.personales', 
+        'paciente_ids', 
+        string='Farmacos'
+    )
+    turnos_count = fields.Integer(
+        string='Cant.Turnos', 
+        compute='_compute_count_turnos', 
+        default=0
+    )
 
 
     #-# FUNCIONES
+    def _compute_count_turnos(self):
+        calendar_obj = self.env['calendar.event'].search([('partner_id','=',self.id)])
+        for rec in self:
+            rec.turnos_count = len(calendar_obj) or 0
+
     @api.depends('paciente_birthday')
     def _calcular_edad(self):
         for rec in self:
@@ -56,7 +93,6 @@ class Pacientes(models.Model):
                 fechanacimiento = rec.paciente_birthday
                 #-#PRIMERO RESTAMOS LOS ANIOS Y LUEGO HACEMOS LA COMPARACION ENTRE MES-> DIA ACTUAL Y MES-> DIA DE NACIMIENTO 
                 edad = hoy.year - fechanacimiento.year - ((hoy.month, hoy.day) < (fechanacimiento.month, fechanacimiento.day))
-                print("==> edad: ",edad)
                 self.paciente_age = int(edad)
             else:
                 self.paciente_age = 0
@@ -141,4 +177,3 @@ class FarmacosPersonales(models.Model):
         string='Farmacos'
     )
     observaciones = fields.Text(string='Observaciones')
-
