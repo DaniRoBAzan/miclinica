@@ -81,7 +81,7 @@ class Pacientes(models.Model):
 
     #-# FUNCIONES
     def _compute_count_turnos(self):
-        calendar_obj = self.env['calendar.event'].search([('partner_id','=',self.id)])
+        calendar_obj = self.env['calendar.event'].search([('partner_ids','=',self.id)])
         for rec in self:
             rec.turnos_count = len(calendar_obj) or 0
 
